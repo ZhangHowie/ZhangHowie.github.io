@@ -106,7 +106,7 @@
 <meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038899543996.jpg">
 <meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 10.22.05.png">
 <meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038904847019.jpg">
-<meta property="og:updated_time" content="2017-08-28T06:22:32.000Z">
+<meta property="og:updated_time" content="2017-08-28T06:39:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="更新Java8查看源码遇到的问题">
 <meta name="twitter:description" content="前言查看源码遇到的问题总结 查看源码总是能遇到这样或者那样的问题，我就拿出自己遇到的几个问题，记录下来，以后有什么问题再增加解决方案。 首先是应对All packages are not available for download首先点开Handler源码会提醒很多Throws 12345678910111213public Handler() &amp;#123;        throw new R">
@@ -374,6 +374,7 @@
 <h2 id="应对decompiled-class-file-bytecode-version-52-0-Java-8"><a href="#应对decompiled-class-file-bytecode-version-52-0-Java-8" class="headerlink" title="应对decompiled .class file, bytecode version:52.0(Java 8)"></a>应对decompiled .class file, bytecode version:52.0(Java 8)</h2><p>前几天更新了Java版本到java8，然后查看源码的时候，就提示，<br><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 10.22.05.png" alt=""><br><code>decompiled .class file, bytecode version:52.0(Java 8)</code><br>网上查了一下资料，是Android SDK没有刷新造成的，<br>现在需要点开Preferences –&gt; Appearance &amp; Behavior –&gt; Android SDK  –&gt;edit </p>
 <p><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038904847019.jpg" alt=""></p>
 <p>就编辑一下，然后下一步，会让你更新一个包，更新完成后，问题就解决了，就可以继续开心的查看源码了。</p>
+<h2 id="参考阅读"><a href="#参考阅读" class="headerlink" title="参考阅读"></a>参考阅读</h2><p>参考阅读：<a href="https://segmentfault.com/a/1190000004426348" target="_blank" rel="external">阅读 Android 源码的一些姿势</a></p>
 
       
     </div>
@@ -544,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首先是应对All-packages-are-not-available-for-download"><span class="nav-number">2.</span> <span class="nav-text">首先是应对All packages are not available for download</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应对decompiled-class-file-bytecode-version-52-0-Java-8"><span class="nav-number">3.</span> <span class="nav-text">应对decompiled .class file, bytecode version:52.0(Java 8)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首先是应对All-packages-are-not-available-for-download"><span class="nav-number">2.</span> <span class="nav-text">首先是应对All packages are not available for download</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应对decompiled-class-file-bytecode-version-52-0-Java-8"><span class="nav-number">3.</span> <span class="nav-text">应对decompiled .class file, bytecode version:52.0(Java 8)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考阅读"><span class="nav-number">4.</span> <span class="nav-text">参考阅读</span></a></li></ol></div>
             
 
           </div>
