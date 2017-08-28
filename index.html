@@ -511,18 +511,18 @@
       
         
           
-            <h2 id="handler详解"><a href="#handler详解" class="headerlink" title="handler详解"></a>handler详解</h2><h3 id="一、Handler是什么"><a href="#一、Handler是什么" class="headerlink" title="一、Handler是什么"></a>一、Handler是什么</h3><p>Android消息机制的上层接口</p>
+            <h1 id="handler详解"><a href="#handler详解" class="headerlink" title="handler详解"></a>handler详解</h1><h2 id="一、Handler是什么"><a href="#一、Handler是什么" class="headerlink" title="一、Handler是什么"></a>一、Handler是什么</h2><p>Android消息机制的上层接口</p>
 <p>一种更新UI的机制，当耗时操作完成时，需要在UI上进行改变，UI线程不是线程安全。</p>
 <p>Handler通过发送和处理Message和Runnable对象来关联相应的线程的MessageQueue</p>
 <ol>
 <li>可以让对应的Message和Runnable在未来的某个时间点进行相应的处理</li>
 <li>让自己想要处理的耗时操作放在子线程，让更新UI的操作放在主线程</li>
 </ol>
-<h3 id="二、Handler的使用方法-主线程调用Handler"><a href="#二、Handler的使用方法-主线程调用Handler" class="headerlink" title="二、Handler的使用方法(主线程调用Handler)"></a>二、Handler的使用方法(主线程调用Handler)</h3><ol>
+<h2 id="二、Handler的使用方法-主线程调用Handler"><a href="#二、Handler的使用方法-主线程调用Handler" class="headerlink" title="二、Handler的使用方法(主线程调用Handler)"></a>二、Handler的使用方法(主线程调用Handler)</h2><ol>
 <li>post(runnable) 延迟消息的处理<br>源码角度，也是调用sendMessage()的方法</li>
 <li>sendMessage(message) 消息传递</li>
 </ol>
-<h3 id="三、Handler机制的原理（源码方式）"><a href="#三、Handler机制的原理（源码方式）" class="headerlink" title="三、Handler机制的原理（源码方式）"></a>三、Handler机制的原理（源码方式）</h3><p>现在来看下源码是如何创建Looper和MessageQueue的。</p>
+<h2 id="三、Handler机制的原理（源码方式）"><a href="#三、Handler机制的原理（源码方式）" class="headerlink" title="三、Handler机制的原理（源码方式）"></a>三、Handler机制的原理（源码方式）</h2><p>现在来看下源码是如何创建Looper和MessageQueue的。</p>
 <p>在Handler的构造方法当中，我们可以看到</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Callback callback, <span class="keyword">boolean</span> async)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (FIND_POTENTIAL_LEAKS) &#123;</div><div class="line">            <span class="keyword">final</span> Class&lt;? extends Handler&gt; klass = getClass();</div><div class="line">            <span class="keyword">if</span> ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp;</div><div class="line">                    (klass.getModifiers() &amp; Modifier.STATIC) == <span class="number">0</span>) &#123;</div><div class="line">                Log.w(TAG, <span class="string">"The following Handler class should be static or leaks might occur: "</span> +</div><div class="line">                    klass.getCanonicalName());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        mLooper = Looper.myLooper();</div><div class="line">        <span class="keyword">if</span> (mLooper == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</div><div class="line">                <span class="string">"Can't create handler inside thread that has not called Looper.prepare()"</span>);</div><div class="line">        &#125;</div><div class="line">        mQueue = mLooper.mQueue;</div><div class="line">        mCallback = callback;</div><div class="line">        mAsynchronous = async;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>Looper对象的创建是通过Looper的myLooper()创建的。<br>然后根据Looper成员变量去创建了MessageQueue对象</p>
@@ -551,7 +551,7 @@
 <li>处理消息<code>msg.target.dispatchMessage(msg);</code></li>
 </ol>
 <p>在来看Handler的dispatchMessage(msg)方法：</p>
-<h3 id="四、Handler引起的内存泄漏以及解决办法"><a href="#四、Handler引起的内存泄漏以及解决办法" class="headerlink" title="四、Handler引起的内存泄漏以及解决办法"></a>四、Handler引起的内存泄漏以及解决办法</h3>
+<h2 id="四、Handler引起的内存泄漏以及解决办法"><a href="#四、Handler引起的内存泄漏以及解决办法" class="headerlink" title="四、Handler引起的内存泄漏以及解决办法"></a>四、Handler引起的内存泄漏以及解决办法</h2>
           
         
       
