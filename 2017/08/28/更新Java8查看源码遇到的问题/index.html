@@ -87,29 +87,29 @@
 
 
 
-  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon_icon.ico?v=5.1.2" />
 
 
 
 
 
 
-<meta name="description" content="应对All packages are not available for download首先点开Handler源码会提醒很多Throws 12345678910111213public Handler() &amp;#123;        throw new RuntimeException(&quot;Stub!&quot;);    &amp;#125;    public Handler(Handler.Callback">
+<meta name="description" content="前言查看源码遇到的问题总结 查看源码总是能遇到这样或者那样的问题，我就拿出自己遇到的几个问题，记录下来，以后有什么问题再增加解决方案。 首先是应对All packages are not available for download首先点开Handler源码会提醒很多Throws 12345678910111213public Handler() &amp;#123;        throw new R">
 <meta name="keywords" content="Android, Android源码, Stub!">
 <meta property="og:type" content="article">
 <meta property="og:title" content="更新Java8查看源码遇到的问题">
 <meta property="og:url" content="http://howiechang.cn/2017/08/28/更新Java8查看源码遇到的问题/index.html">
 <meta property="og:site_name" content="Coding，努力，专注">
-<meta property="og:description" content="应对All packages are not available for download首先点开Handler源码会提醒很多Throws 12345678910111213public Handler() &amp;#123;        throw new RuntimeException(&quot;Stub!&quot;);    &amp;#125;    public Handler(Handler.Callback">
+<meta property="og:description" content="前言查看源码遇到的问题总结 查看源码总是能遇到这样或者那样的问题，我就拿出自己遇到的几个问题，记录下来，以后有什么问题再增加解决方案。 首先是应对All packages are not available for download首先点开Handler源码会提醒很多Throws 12345678910111213public Handler() &amp;#123;        throw new R">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 11.04.38.png">
 <meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038899543996.jpg">
 <meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 10.22.05.png">
 <meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038904847019.jpg">
-<meta property="og:updated_time" content="2017-08-28T03:47:55.000Z">
+<meta property="og:updated_time" content="2017-08-28T06:22:32.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="更新Java8查看源码遇到的问题">
-<meta name="twitter:description" content="应对All packages are not available for download首先点开Handler源码会提醒很多Throws 12345678910111213public Handler() &amp;#123;        throw new RuntimeException(&quot;Stub!&quot;);    &amp;#125;    public Handler(Handler.Callback">
+<meta name="twitter:description" content="前言查看源码遇到的问题总结 查看源码总是能遇到这样或者那样的问题，我就拿出自己遇到的几个问题，记录下来，以后有什么问题再增加解决方案。 首先是应对All packages are not available for download首先点开Handler源码会提醒很多Throws 12345678910111213public Handler() &amp;#123;        throw new R">
 <meta name="twitter:image" content="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 11.04.38.png">
 
 
@@ -361,8 +361,11 @@
       
 
       
-        <h2 id="应对All-packages-are-not-available-for-download"><a href="#应对All-packages-are-not-available-for-download" class="headerlink" title="应对All packages are not available for download"></a>应对All packages are not available for download</h2><p>首先点开Handler源码会提醒很多Throws</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>查看源码遇到的问题总结</p>
+<p>查看源码总是能遇到这样或者那样的问题，我就拿出自己遇到的几个问题，记录下来，以后有什么问题再增加解决方案。</p>
+<h2 id="首先是应对All-packages-are-not-available-for-download"><a href="#首先是应对All-packages-are-not-available-for-download" class="headerlink" title="首先是应对All packages are not available for download"></a>首先是应对All packages are not available for download</h2><p>首先点开Handler源码会提醒很多Throws</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Handler.Callback callback)</span> </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    ...</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Looper looper)</span> </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <p><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 11.04.38.png" alt="屏幕快照 2017-08-28 11.04.38"></p>
 <p>这是因为你的compileSdkVersion中没有包含当前版本所需要的Sources for Android，<br><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038899543996.jpg" alt=""></p>
 <p>例如目前还没有最新版Oreo的Sources，你却把当前的compileSdkVersion设成了26，那么你就会报这样的错误。</p>
@@ -541,7 +544,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#应对All-packages-are-not-available-for-download"><span class="nav-number">1.</span> <span class="nav-text">应对All packages are not available for download</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应对decompiled-class-file-bytecode-version-52-0-Java-8"><span class="nav-number">2.</span> <span class="nav-text">应对decompiled .class file, bytecode version:52.0(Java 8)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#首先是应对All-packages-are-not-available-for-download"><span class="nav-number">2.</span> <span class="nav-text">首先是应对All packages are not available for download</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#应对decompiled-class-file-bytecode-version-52-0-Java-8"><span class="nav-number">3.</span> <span class="nav-text">应对decompiled .class file, bytecode version:52.0(Java 8)</span></a></li></ol></div>
             
 
           </div>
