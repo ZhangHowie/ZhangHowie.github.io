@@ -272,7 +272,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张昊月">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://otbemm1i1.bkt.clouddn.com/17-8-12/6948694.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -360,18 +360,19 @@
       
         
           
-            <h2 id="应对All-packages-are-not-available-for-download"><a href="#应对All-packages-are-not-available-for-download" class="headerlink" title="应对All packages are not available for download"></a>应对All packages are not available for download</h2><p>首先点开Handler源码会提醒很多Throws</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Handler.Callback callback)</span> </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    ...</div><div class="line">    </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Looper looper)</span> </span>&#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Stub!"</span>);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 11.04.38.png" alt="屏幕快照 2017-08-28 11.04.38"></p>
-<p>这是因为你的compileSdkVersion中没有包含当前版本所需要的Sources for Android，<br><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038899543996.jpg" alt=""></p>
-<p>例如目前还没有最新版Oreo的Sources，你却把当前的compileSdkVersion设成了26，那么你就会报这样的错误。</p>
-<p>那么你就可以将compileSdkVersion调整为你已经下载Sources的SDK对应的数字，就可以解决了。</p>
-<p>另外，“RuntimeException(“Stub!”)” 表示实际运行时的逻辑会由 Android ROM 里面相同的类代替执行。</p>
-<h2 id="应对decompiled-class-file-bytecode-version-52-0-Java-8"><a href="#应对decompiled-class-file-bytecode-version-52-0-Java-8" class="headerlink" title="应对decompiled .class file, bytecode version:52.0(Java 8)"></a>应对decompiled .class file, bytecode version:52.0(Java 8)</h2><p>前几天更新了Java版本到java8，然后查看源码的时候，就提示，<br><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-屏幕快照 2017-08-28 10.22.05.png" alt=""><br><code>decompiled .class file, bytecode version:52.0(Java 8)</code><br>网上查了一下资料，是Android SDK没有刷新造成的，<br>现在需要点开Preferences –&gt; Appearance &amp; Behavior –&gt; Android SDK  –&gt;edit </p>
-<p><img src="http://otbemm1i1.bkt.clouddn.com/2017-08-28-15038904847019.jpg" alt=""></p>
-<p>就编辑一下，然后下一步，会让你更新一个包，更新完成后，问题就解决了，就可以继续开心的查看源码了。</p>
+          应对All packages are not available for download首先点开Handler源码会提醒很多Throws
+12345678910111213public Handler() &#123;        throw new RuntimeException("Stub!");    &#125;    public Handler(Handler.Callback callback) &#123;        throw new RuntimeException("Stub!");    &#125;        ...        public Handler(Looper looper) &#123;        throw new RuntimeException("Stub!");    &#125;
 
-          
+这是因为你的compileSdkVersion中没有包含当前版本所需要的Sources for Android，
+例如目前还没有最新版Oreo的Sources，你却把当前的compileSdkVersion设成了26，那么你就会报这样的错
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/28/更新Java8查看源码遇到的问题/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -423,7 +424,7 @@
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="张昊月">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="http://otbemm1i1.bkt.clouddn.com/17-8-12/6948694.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
@@ -511,48 +512,28 @@
       
         
           
-            <h1 id="handler详解"><a href="#handler详解" class="headerlink" title="handler详解"></a>handler详解</h1><h2 id="一、Handler是什么"><a href="#一、Handler是什么" class="headerlink" title="一、Handler是什么"></a>一、Handler是什么</h2><p>Android消息机制的上层接口</p>
-<p>一种更新UI的机制，当耗时操作完成时，需要在UI上进行改变，UI线程不是线程安全。</p>
-<p>Handler通过发送和处理Message和Runnable对象来关联相应的线程的MessageQueue</p>
-<ol>
-<li>可以让对应的Message和Runnable在未来的某个时间点进行相应的处理</li>
-<li>让自己想要处理的耗时操作放在子线程，让更新UI的操作放在主线程</li>
-</ol>
-<h2 id="二、Handler的使用方法-主线程调用Handler"><a href="#二、Handler的使用方法-主线程调用Handler" class="headerlink" title="二、Handler的使用方法(主线程调用Handler)"></a>二、Handler的使用方法(主线程调用Handler)</h2><ol>
-<li>post(runnable) 延迟消息的处理<br>源码角度，也是调用sendMessage()的方法</li>
-<li>sendMessage(message) 消息传递</li>
-</ol>
-<h2 id="三、Handler机制的原理（源码方式）"><a href="#三、Handler机制的原理（源码方式）" class="headerlink" title="三、Handler机制的原理（源码方式）"></a>三、Handler机制的原理（源码方式）</h2><p>现在来看下源码是如何创建Looper和MessageQueue的。</p>
-<p>在Handler的构造方法当中，我们可以看到</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">Handler</span><span class="params">(Callback callback, <span class="keyword">boolean</span> async)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (FIND_POTENTIAL_LEAKS) &#123;</div><div class="line">            <span class="keyword">final</span> Class&lt;? extends Handler&gt; klass = getClass();</div><div class="line">            <span class="keyword">if</span> ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp;</div><div class="line">                    (klass.getModifiers() &amp; Modifier.STATIC) == <span class="number">0</span>) &#123;</div><div class="line">                Log.w(TAG, <span class="string">"The following Handler class should be static or leaks might occur: "</span> +</div><div class="line">                    klass.getCanonicalName());</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        mLooper = Looper.myLooper();</div><div class="line">        <span class="keyword">if</span> (mLooper == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(</div><div class="line">                <span class="string">"Can't create handler inside thread that has not called Looper.prepare()"</span>);</div><div class="line">        &#125;</div><div class="line">        mQueue = mLooper.mQueue;</div><div class="line">        mCallback = callback;</div><div class="line">        mAsynchronous = async;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>Looper对象的创建是通过Looper的myLooper()创建的。<br>然后根据Looper成员变量去创建了MessageQueue对象</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="meta">@Nullable</span> <span class="function">Looper <span class="title">myLooper</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> sThreadLocal.get();</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>可以看到在myLooper的方法中，是使用ThreadLocal的get()方法获取到的。<br>这里贴一个ThreadLocal的说明，</p>
-<blockquote>
-<p>ThreadLocal是什么？<br>ThreadLocal是一个关于创建线程局部变量的类。<br>通常情况下，我们创建的变量是可以被任何一个线程访问并修改的。而使用ThreadLocal创建的变量只能被当前线程访问，其他线程则无法访问和修改。</p>
-</blockquote>
-<p>然而每个ThreadLocal是在Looper的prepareMainLooper()方法中，调用prepare(boolean quitAllowed)方法去set的。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(<span class="keyword">boolean</span> quitAllowed)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (sThreadLocal.get() != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Only one Looper may be created per thread"</span>);</div><div class="line">        &#125;</div><div class="line">        sThreadLocal.set(<span class="keyword">new</span> Looper(quitAllowed));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepareMainLooper</span><span class="params">()</span> </span>&#123;</div><div class="line">        prepare(<span class="keyword">false</span>);</div><div class="line">        <span class="keyword">synchronized</span> (Looper.class) &#123;</div><div class="line">            <span class="keyword">if</span> (sMainLooper != <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"The main Looper has already been prepared."</span>);</div><div class="line">            &#125;</div><div class="line">            sMainLooper = myLooper();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>这样我们就知道了，通过不同的线程，去访问同一个ThreadLocal的时候，不管是get()还是set()，仅限于当前线程，每一个线程有单独的Looper</p>
-<p><strong>保证了每个线程Looper的唯一性</strong></p>
-<p>这样Handler就和MessageQueue绑定在一起了,是通过创建Looper对象，然后通过Looper去管理MessageQueue。</p>
-<ol>
-<li>Looper<br>每一个线程所独有的，通过下面的loop()读取MessageQueue（消息队列，先进先出）里的消息，读到消息后发到Handler进行处理。<br>每一个线程有单独的Looper</li>
-<li>Handler<br>两个作用：发送消息，处理消息。<br>不能发到其他线程，只能发送到当前关联的线程。所以就把Looper，MessageQueue，Handler关联到了一起。</li>
-</ol>
-<p>主线程才能更新UI，大家都知道，但是为什么Handler也一定要在主线程创建呢？<br>因为每一个Handler的要与主线程的消息队列关联上，这就是为什么我们一定要在主线程创建Handler，而不能在内部类创建的原因。</p>
-<p>通过在主线程的Handler绑定到消息队列，这样才可以让Handler的sendMessage()执行在UI线程,保证了UI线程的线程安全。</p>
-<p>调用了sendMessage和post方法，都是要Looper开启loop()方法来从MessageQueue中获取消息<br>进入loop方法，看一下。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">final</span> Looper me = myLooper();</div><div class="line">        <span class="keyword">if</span> (me == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"No Looper; Looper.prepare() wasn't called on this thread."</span>);</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">final</span> MessageQueue queue = me.mQueue;</div><div class="line"></div><div class="line">        <span class="comment">// Make sure the identity of this thread is that of the local process,</span></div><div class="line">        <span class="comment">// and keep track of what that identity token actually is.</span></div><div class="line">        Binder.clearCallingIdentity();</div><div class="line">        <span class="keyword">final</span> <span class="keyword">long</span> ident = Binder.clearCallingIdentity();</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (;;) &#123;</div><div class="line">            Message msg = queue.next(); <span class="comment">// might block</span></div><div class="line">            <span class="keyword">if</span> (msg == <span class="keyword">null</span>) &#123;</div><div class="line">                <span class="comment">// No message indicates that the message queue is quitting.</span></div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// This must be in a local variable, in case a UI event sets the logger</span></div><div class="line">            <span class="keyword">final</span> Printer logging = me.mLogging;</div><div class="line">            <span class="keyword">if</span> (logging != <span class="keyword">null</span>) &#123;</div><div class="line">                logging.println(<span class="string">"&gt;&gt;&gt;&gt;&gt; Dispatching to "</span> + msg.target + <span class="string">" "</span> +</div><div class="line">                        msg.callback + <span class="string">": "</span> + msg.what);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">final</span> <span class="keyword">long</span> traceTag = me.mTraceTag;</div><div class="line">            <span class="keyword">if</span> (traceTag != <span class="number">0</span> &amp;&amp; Trace.isTagEnabled(traceTag)) &#123;</div><div class="line">                Trace.traceBegin(traceTag, msg.target.getTraceName(msg));</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                msg.target.dispatchMessage(msg);</div><div class="line">            &#125; <span class="keyword">finally</span> &#123;</div><div class="line">                <span class="keyword">if</span> (traceTag != <span class="number">0</span>) &#123;</div><div class="line">                    Trace.traceEnd(traceTag);</div><div class="line">                &#125;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (logging != <span class="keyword">null</span>) &#123;</div><div class="line">                logging.println(<span class="string">"&lt;&lt;&lt;&lt;&lt; Finished to "</span> + msg.target + <span class="string">" "</span> + msg.callback);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            <span class="comment">// Make sure that during the course of dispatching the</span></div><div class="line">            <span class="comment">// identity of the thread wasn't corrupted.</span></div><div class="line">            <span class="keyword">final</span> <span class="keyword">long</span> newIdent = Binder.clearCallingIdentity();</div><div class="line">            <span class="keyword">if</span> (ident != newIdent) &#123;</div><div class="line">                Log.wtf(TAG, <span class="string">"Thread identity changed from 0x"</span></div><div class="line">                        + Long.toHexString(ident) + <span class="string">" to 0x"</span></div><div class="line">                        + Long.toHexString(newIdent) + <span class="string">" while dispatching to "</span></div><div class="line">                        + msg.target.getClass().getName() + <span class="string">" "</span></div><div class="line">                        + msg.callback + <span class="string">" what="</span> + msg.what);</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            msg.recycleUnchecked();</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
-<p>loop()很长，但是loop()的实质就是创建死循环，然后从消息队列逐个取出消息，最后处理消息的过程。<br>注意这一句<code>msg.target.dispatchMessage(msg);</code><br>其实target实质上是一个Handler，消息队列最后又把消息分发给了Handler来处理</p>
-<p>Handler的两个作用就体现出来了：</p>
-<ol>
-<li>发送消息，接收消息</li>
-<li>处理消息<code>msg.target.dispatchMessage(msg);</code></li>
-</ol>
-<p>在来看Handler的dispatchMessage(msg)方法：</p>
-<h2 id="四、Handler引起的内存泄漏以及解决办法"><a href="#四、Handler引起的内存泄漏以及解决办法" class="headerlink" title="四、Handler引起的内存泄漏以及解决办法"></a>四、Handler引起的内存泄漏以及解决办法</h2>
-          
+          handler详解一、Handler是什么Android消息机制的上层接口
+一种更新UI的机制，当耗时操作完成时，需要在UI上进行改变，UI线程不是线程安全。
+Handler通过发送和处理Message和Runnable对象来关联相应的线程的MessageQueue
+
+可以让对应的Message和Runnable在未来的某个时间点进行相应的处理
+让自己想要处理的耗时操作放在子线程，让更新UI的操作放在主线程
+
+二、Handler的使用方法(主线程调用Handler)
+post(runnable) 延迟消息的处理源码角度，也是调用sendMessage()的方法
+sendMessage(message) 消息传递
+
+三、Handler机制的原理（源码方式）现在来看下源码是如何创建Looper和MessageQueue的。
+在Handler的构造方法当中，我们可以看到
+12345678910111213141516171819public Handler(Callback callback, boolean async) &#123;        if (FIND_POTENTIAL_L
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/25/第一篇博客献给Handler/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -620,7 +601,7 @@
       <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
-               src="/images/avatar.gif"
+               src="http://otbemm1i1.bkt.clouddn.com/17-8-12/6948694.jpg"
                alt="张昊月" />
           <p class="site-author-name" itemprop="name">张昊月</p>
            
