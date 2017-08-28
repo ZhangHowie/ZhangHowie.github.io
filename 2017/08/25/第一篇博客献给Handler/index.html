@@ -94,16 +94,17 @@
 
 
 
-<meta name="description" content="泰山不让土壤，故能成其大；河海不择细流，故能就其深。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Coding，努力，专注">
-<meta property="og:url" content="http://howiechang.cn/index.html">
+<meta name="description" content="handler详解一、Handler是什么Android消息机制的上层接口 一种更新UI的机制，当耗时操作完成时，需要在UI上进行改变，UI线程不是线程安全。 Handler通过发送和处理Message和Runnable对象来关联相应的线程的MessageQueue  可以让对应的Message和Runnable在未来的某个时间点进行相应的处理 让自己想要处理的耗时操作放在子线程，让更新UI的操作">
+<meta property="og:type" content="article">
+<meta property="og:title" content="第一篇博客献给Handler">
+<meta property="og:url" content="http://howiechang.cn/2017/08/25/第一篇博客献给Handler/index.html">
 <meta property="og:site_name" content="Coding，努力，专注">
-<meta property="og:description" content="泰山不让土壤，故能成其大；河海不择细流，故能就其深。">
+<meta property="og:description" content="handler详解一、Handler是什么Android消息机制的上层接口 一种更新UI的机制，当耗时操作完成时，需要在UI上进行改变，UI线程不是线程安全。 Handler通过发送和处理Message和Runnable对象来关联相应的线程的MessageQueue  可以让对应的Message和Runnable在未来的某个时间点进行相应的处理 让自己想要处理的耗时操作放在子线程，让更新UI的操作">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-08-28T01:46:45.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Coding，努力，专注">
-<meta name="twitter:description" content="泰山不让土壤，故能成其大；河海不择细流，故能就其深。">
+<meta name="twitter:title" content="第一篇博客献给Handler">
+<meta name="twitter:description" content="handler详解一、Handler是什么Android消息机制的上层接口 一种更新UI的机制，当耗时操作完成时，需要在UI上进行改变，UI线程不是线程安全。 Handler通过发送和处理Message和Runnable对象来关联相应的线程的MessageQueue  可以让对应的Message和Runnable在未来的某个时间点进行相应的处理 让自己想要处理的耗时操作放在子线程，让更新UI的操作">
 
 
 
@@ -132,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://howiechang.cn/"/>
+  <link rel="canonical" href="http://howiechang.cn/2017/08/25/第一篇博客献给Handler/"/>
 
 
 
 
 
-  <title>Coding，努力，专注</title>
+  <title>第一篇博客献给Handler | Coding，努力，专注</title>
   
 
 
@@ -167,9 +168,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-   page-home 
- ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -252,9 +251,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -284,9 +283,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/08/25/第一篇博客献给Handler/" itemprop="url">第一篇博客献给Handler</a></h1>
+          <h1 class="post-title" itemprop="name headline">第一篇博客献给Handler</h1>
         
 
         <div class="post-meta">
@@ -358,9 +355,7 @@
       
 
       
-        
-          
-            <h2 id="handler详解"><a href="#handler详解" class="headerlink" title="handler详解"></a>handler详解</h2><h3 id="一、Handler是什么"><a href="#一、Handler是什么" class="headerlink" title="一、Handler是什么"></a>一、Handler是什么</h3><p>Android消息机制的上层接口</p>
+        <h2 id="handler详解"><a href="#handler详解" class="headerlink" title="handler详解"></a>handler详解</h2><h3 id="一、Handler是什么"><a href="#一、Handler是什么" class="headerlink" title="一、Handler是什么"></a>一、Handler是什么</h3><p>Android消息机制的上层接口</p>
 <p>一种更新UI的机制，当耗时操作完成时，需要在UI上进行改变，UI线程不是线程安全。</p>
 <p>Handler通过发送和处理Message和Runnable对象来关联相应的线程的MessageQueue</p>
 <ol>
@@ -401,8 +396,6 @@
 </ol>
 <p>在来看Handler的dispatchMessage(msg)方法：</p>
 <h3 id="四、Handler引起的内存泄漏以及解决办法"><a href="#四、Handler引起的内存泄漏以及解决办法" class="headerlink" title="四、Handler引起的内存泄漏以及解决办法"></a>四、Handler引起的内存泄漏以及解决办法</h3>
-          
-        
       
     </div>
     
@@ -419,12 +412,12 @@
       
 
       
+      
+      
 
       
 
       
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -434,10 +427,11 @@
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -445,6 +439,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -465,8 +470,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.gif"
@@ -510,6 +524,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#handler详解"><span class="nav-number">1.</span> <span class="nav-text">handler详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、Handler是什么"><span class="nav-number">1.1.</span> <span class="nav-text">一、Handler是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、Handler的使用方法-主线程调用Handler"><span class="nav-number">1.2.</span> <span class="nav-text">二、Handler的使用方法(主线程调用Handler)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、Handler机制的原理（源码方式）"><span class="nav-number">1.3.</span> <span class="nav-text">三、Handler机制的原理（源码方式）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#四、Handler引起的内存泄漏以及解决办法"><span class="nav-number">1.4.</span> <span class="nav-text">四、Handler引起的内存泄漏以及解决办法</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -640,10 +670,10 @@
 
 
   
-    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
 <script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
 
-  
+
 
   
 
@@ -661,6 +691,18 @@
       <script id="dsq-count-scr" src="https://HowieChang.disqus.com/count.js" async></script>
     
 
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://howiechang.cn/2017/08/25/第一篇博客献给Handler/';
+          this.page.identifier = '2017/08/25/第一篇博客献给Handler/';
+          this.page.title = '第一篇博客献给Handler';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://HowieChang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
     
 
   
