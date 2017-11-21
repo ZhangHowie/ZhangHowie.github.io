@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="JobSechedule,定时任务,Android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon_icon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="如何使用 JobSchedule假设一个场景，如果我们在用户充上电，连接上WiFi以后需要定时5分钟去下载一个文件，或者发送一项通知，我们应该怎么做？ 去加入各项BroadCast，加入各项判断，限制条件去执行？ 不不，这都太低效了，我来介绍下从Android L开始加入的 JobSchedule策略 本文会介绍三种常用的 JobSchedule，一个是Google Firebase的 Fireb">
+<meta name="keywords" content="JobSechedule,定时任务,Android">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用JobSchedule">
+<meta property="og:url" content="http://howiechang.cn/2017/11/21/如何使用JobSchedule/index.html">
+<meta property="og:site_name" content="Coding，努力，专注">
+<meta property="og:description" content="如何使用 JobSchedule假设一个场景，如果我们在用户充上电，连接上WiFi以后需要定时5分钟去下载一个文件，或者发送一项通知，我们应该怎么做？ 去加入各项BroadCast，加入各项判断，限制条件去执行？ 不不，这都太低效了，我来介绍下从Android L开始加入的 JobSchedule策略 本文会介绍三种常用的 JobSchedule，一个是Google Firebase的 Fireb">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/15112317650663.jpg">
+<meta property="og:image" content="http://otbemm1i1.bkt.clouddn.com/15112319634344.jpg">
+<meta property="og:updated_time" content="2017-11-21T08:31:32.357Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何使用JobSchedule">
+<meta name="twitter:description" content="如何使用 JobSchedule假设一个场景，如果我们在用户充上电，连接上WiFi以后需要定时5分钟去下载一个文件，或者发送一项通知，我们应该怎么做？ 去加入各项BroadCast，加入各项判断，限制条件去执行？ 不不，这都太低效了，我来介绍下从Android L开始加入的 JobSchedule策略 本文会介绍三种常用的 JobSchedule，一个是Google Firebase的 Fireb">
+<meta name="twitter:image" content="http://otbemm1i1.bkt.clouddn.com/15112317650663.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://howiechang.cn/2017/11/21/如何使用JobSchedule/"/>
+
+
+
+
+
+  <title>如何使用JobSchedule | Coding，努力，专注</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?e0350e73ae0d647bff2f9287f2e3423f";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Coding，努力，专注</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://howiechang.cn/2017/11/21/如何使用JobSchedule/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="张昊月">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://otbemm1i1.bkt.clouddn.com/17-8-12/6948694.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Coding，努力，专注">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">如何使用JobSchedule</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-21T09:50:44+08:00">
+                2017-11-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/21/如何使用JobSchedule/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/21/如何使用JobSchedule/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2017/11/21/如何使用JobSchedule/" class="leancloud_visitors" data-flag-title="如何使用JobSchedule">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="如何使用-JobSchedule"><a href="#如何使用-JobSchedule" class="headerlink" title="如何使用 JobSchedule"></a>如何使用 JobSchedule</h1><p>假设一个场景，如果我们在用户充上电，连接上WiFi以后需要定时5分钟去下载一个文件，或者发送一项通知，我们应该怎么做？</p>
+<p>去加入各项BroadCast，加入各项判断，限制条件去执行？</p>
+<p>不不，这都太低效了，我来介绍下从Android L开始加入的 JobSchedule策略</p>
+<p>本文会介绍三种常用的 JobSchedule，一个是Google Firebase的 Firebase-JobSchedule， 原生的 JobSchedule， 一个是第三方的 android-job</p>
+<blockquote>
+<p>先介绍一下 JobSchedule ：</p>
+<p>它提供了一个API，用于调度将在应用程序进程中执行的工作单元（由JobService子类表示）。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="三种库比较"><a href="#三种库比较" class="headerlink" title="三种库比较"></a>三种库比较</h2><p>首先祭出 Firebase对于三项的比较总结：</p>
+<table>
+<thead>
+<tr>
+<th>Library</th>
+<th>支持最低 API</th>
+<th>是否需要 Google Play服务</th>
+<th>服务API<a href="https://github.com/firebase/firebase-jobdispatcher-android#fn1" target="_blank" rel="external">1</a></th>
+<th>支持重试策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Framework <a href="https://developer.android.google.cn/reference/android/app/job/JobScheduler.html" target="_blank" rel="external">JobScheduler</a></td>
+<td>21</td>
+<td>No</td>
+<td>JobScheduler</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><a href="https://github.com/firebase/firebase-jobdispatcher-android" target="_blank" rel="external">Firebase JobDispatcher</a></td>
+<td>9</td>
+<td>Yes</td>
+<td>JobScheduler</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td><a href="https://github.com/evernote/android-job" target="_blank" rel="external">evernote/android-job</a></td>
+<td>14</td>
+<td>No<a href="https://github.com/firebase/firebase-jobdispatcher-android#fn2" target="_blank" rel="external">2</a></td>
+<td>自定义的</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<p>1: Refers to the methods that need to be implemented in the Service subclass.<br>2: Uses AlarmManager to support API levels &lt;= 21 if Google Play services is unavailable.</p>
+<p>这三项的介绍和使用范例都在相应的超链接里面都有，如果你英文比较好，自学能力比较强，你可以关掉网页，go away了。</p>
+<p>上表主要意思就是，框架的 JobSchedule不需要 Google play 服务，但是只支持API21以上的设备。FirebaseJobSchedule最低支持到API 9，可满足绝大多数设备。上面两者的API都是基于 JobSchedule。</p>
+<p>另外一种可能更适合国内的开发者，开发对于没有 Google play 服务的设置，而且又支持更低的API。</p>
+<p>首先我们来看下 Firebase 的 JobSchedule 。</p>
+<h2 id="FirebaseJobSchedule"><a href="#FirebaseJobSchedule" class="headerlink" title="FirebaseJobSchedule"></a>FirebaseJobSchedule</h2><p>因为这个库需要支持 Google Play 服务，所以你的模拟器和你的Android SDK的 Google Play service 这一项。如果你觉得麻烦，可以跳过。</p>
+<p><img src="http://otbemm1i1.bkt.clouddn.com/15112317650663.jpg" alt=""></p>
+<p><img src="http://otbemm1i1.bkt.clouddn.com/15112319634344.jpg" alt=""></p>
+<p><strong>添加Firebase JobService 的依赖</strong></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'com.firebase:firebase-jobdispatcher:0.5.0'</span></div></pre></td></tr></table></figure>
+<p><strong>首先，创建一个 服务继承于JobService类</strong></p>
+<p>需要复写两个抽象类：onStartJob， onStopJob</p>
+<blockquote>
+<p>要注意这里的 onStartJob 是工作在主线程的，尽可能新建线程去执行。</p>
+<p>这里的 onStopJob , 中断正在运行的作业的执行时调用，很可能是因为与作业相关的运行时间约束不再满足。</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.firebase.jobdispatcher.JobParameters;</div><div class="line"><span class="keyword">import</span> com.firebase.jobdispatcher.JobService;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyJobService</span> <span class="keyword">extends</span> <span class="title">JobService</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStartJob</span><span class="params">(JobParameters job)</span> </span>&#123;</div><div class="line">        <span class="comment">// 在这里开始你的 Job</span></div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">// Answers the question: "Is there still work going on?"</span></div><div class="line">      <span class="comment">//到这里是否还有其他任务未完成?有的话 return ture</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStopJob</span><span class="params">(JobParameters job)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>; <span class="comment">// Answers the question: "Should this job be retried?"</span></div><div class="line">      <span class="comment">//意思是如果条件重新满足,是否再次尝试 Job</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>把Service加入到manifest</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;service</div><div class="line">    android:exported=<span class="string">"false"</span></div><div class="line">    android:name=<span class="string">".MyJobService"</span>&gt;</div><div class="line">    &lt;intent-filter&gt;</div><div class="line">        &lt;action android:name=<span class="string">"com.firebase.jobdispatcher.ACTION_EXECUTE"</span>/&gt;</div><div class="line">    &lt;/intent-filter&gt;</div><div class="line">&lt;/service&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>需要注意，要添加action：com.firebase.jobdispatcher.ACTION_EXECUTE</p>
+</blockquote>
+<p><strong>创建调度器</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">Driver driver = <span class="keyword">new</span> GooglePlayDriver(context);</div><div class="line">        <span class="comment">//首先创建一个Google Service的Driver</span></div><div class="line">FirebaseJobDispatcher dispatcher = <span class="keyword">new</span> FirebaseJobDispatcher(driver);</div><div class="line"><span class="comment">//然后创建相应的调度器</span></div></pre></td></tr></table></figure>
+<p><strong>通过 Dispatcher创建要执行的 Job</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Job job =  dispatcher.newJobBuilder()</div><div class="line">                .setService(WaterReminderFirebaseJobService.class)</div><div class="line">                <span class="comment">// 把我们之间创建的 Service 传入</span></div><div class="line">                .setTag(REMINDER_JOB_TAG)</div><div class="line">                <span class="comment">// 要设置一个 Tag 来标记我们的这个 Job</span></div><div class="line">                .addConstraint(Constraint.DEVICE_CHARGING)</div><div class="line">                <span class="comment">//加入限制条件,这里加入的是 DEVICE_CHARGING</span></div><div class="line">                <span class="comment">// 还有ON_UNMETERED_NETWORK, 也就是 WiFi, 不计量的网络</span></div><div class="line">                .setLifetime(Lifetime.FOREVER)</div><div class="line">                <span class="comment">//设置生命周期, 这里设置是永久, 默认的是 UNTIL_NEXT_BOOT, 到下次重启前有效</span></div><div class="line">                .setRecurring(<span class="keyword">true</span>)</div><div class="line">                <span class="comment">// 设置是否允许反复出现</span></div><div class="line">                .setTrigger(Trigger.executionWindow(</div><div class="line">                        REMINDER_INTERVAL_SECONDS,</div><div class="line">                        REMINDER_INTERVAL_SECONDS + SYNC_FLEXTIME_SECONDS))</div><div class="line">                <span class="comment">//设置开启的时间, 第一项表示开启的延迟时间, 第二项表示开启的最晚时间</span></div><div class="line">                <span class="comment">//也就是任务会在 start 和 end 之间开启.</span></div><div class="line">                .setReplaceCurrent(<span class="keyword">true</span>)</div><div class="line">                <span class="comment">//setReplaceCurrent(true)</span></div><div class="line">                <span class="comment">// 如果设为 True，意味着如果重新创建新 Job，新的 Job将会替换旧的 Job</span></div><div class="line">                .build();</div><div class="line"></div><div class="line">dispatcher.mustSchedule(myJob);</div><div class="line"><span class="comment">//最后来启动这个 Job</span></div></pre></td></tr></table></figure>
+<p><strong>关闭一个 job</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dispatcher.cancel(<span class="string">"my-unique-tag"</span>);</div><div class="line"><span class="comment">//通过之前保存的那个 Tag, 来关闭对应的 Job</span></div></pre></td></tr></table></figure>
+<p><strong>关闭所有的 Job</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">dispatcher.cancelAll();</div><div class="line"><span class="comment">//把所有的 Job 都关闭</span></div></pre></td></tr></table></figure>
+<h2 id="原生的-JobScheduler"><a href="#原生的-JobScheduler" class="headerlink" title="原生的 JobScheduler"></a>原生的 JobScheduler</h2><p><strong>首先呢, 也是创建  JobService</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JobServiceSample</span> <span class="keyword">extends</span> <span class="title">JobService</span> </span>&#123;</div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStartJob</span><span class="params">(JobParameters params)</span> </span>&#123;</div><div class="line">      <span class="comment">// 返回true，表示该工作耗时，同时工作处理完成后需要调用onStopJob销毁（jobFinished）</span></div><div class="line">        <span class="comment">// 返回false，任务运行不需要很长时间，到return时已完成任务处理</span></div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onStopJob</span><span class="params">(JobParameters params)</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">      <span class="comment">// 有且仅有onStartJob返回值为true时，才会调用onStopJob来销毁job</span></div><div class="line">        <span class="comment">// 返回false来销毁这个工作</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong>然后在 Manifest 文件中加入service 标签</strong></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">service</span></span></div><div class="line"><span class="tag">            <span class="attr">android:name</span>=<span class="string">".sync.WaterReminderJobService"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:permission</span>=<span class="string">"android.permission.BIND_JOB_SERVICE"</span></span></div><div class="line"><span class="tag">            <span class="attr">android:exported</span>=<span class="string">"false"</span>&gt;</span></div><div class="line"></div><div class="line">        <span class="tag">&lt;/<span class="name">service</span>&gt;</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>千万注意要加上 <code>android:permission=&quot;android.permission.BIND_JOB_SERVICE&quot;</code></p>
+</blockquote>
+<p><strong>创建ComponentName</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ComponentName componentName = <span class="keyword">new</span> ComponentName(context, WaterReminderJobService.class);</div><div class="line"><span class="comment">//如果没有加上 android:permission 这里会警告</span></div></pre></td></tr></table></figure>
+<p><strong>创建 JobInfo</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">JobInfo jobInfo= <span class="keyword">new</span> JobInfo.Builder(jobId, componentName)</div><div class="line">                <span class="comment">//                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_UNMETERED)</span></div><div class="line">                <span class="comment">//设置要求的网络状态默认四种</span></div><div class="line">                <span class="comment">// NETWORK_TYPE_NONE 默认的</span></div><div class="line">                <span class="comment">// NETWORK_TYPE_ANY 有网络时</span></div><div class="line">                <span class="comment">// NETWORK_TYPE_UNMETERED 连接到无限制流量网络, 也就是 WiFi</span></div><div class="line">                <span class="comment">// NETWORK_TYPE_NOT_ROAMING 没有漫游的状态</span></div><div class="line">                .setRequiresCharging(<span class="keyword">true</span>)</div><div class="line">                <span class="comment">//要求设备是否在充电</span></div><div class="line">                .setPersisted(<span class="keyword">true</span>)</div><div class="line">                <span class="comment">//重启后是否还要继续执行, 需要声明 android.permission.RECEIVE_BOOT_COMPLETED 权限</span></div><div class="line">                .setMinimumLatency(<span class="number">0</span>)</div><div class="line">                <span class="comment">//设置至少延迟多久后执行, 单位毫秒</span></div><div class="line">                .setOverrideDeadline(TimeUnit.SECONDS.toMillis(<span class="number">5</span>))</div><div class="line">                <span class="comment">//设置最多延迟多久后执行, 单位毫秒</span></div><div class="line">                .build();</div></pre></td></tr></table></figure>
+<p><strong>创建 JobScheduler</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">JobScheduler jobScheduler = (JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);</div></pre></td></tr></table></figure>
+<p><strong>最后运行 job</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">jobScheduler.schedule(jobInfo);</div></pre></td></tr></table></figure>
+<p>JobScheduler 的方法还有 cancel(jobId), cancelAll(),用来关闭相应的 Job</p>
+<p>jobId 是我们创建的一个独立的 ID, 用来标志当前 Job, 必须唯一.</p>
+<blockquote>
+<p>不过这里遇到一个问题,某些机型上, 在使用 JobScheduler 的时候,尽管我已经要求了 Charging 充电,但是在手机没有充电的情况下,仍然执行了 Job</p>
+<p>而且, 在停止充电以后, JobService 的 onStopJob() 并没有调用.</p>
+</blockquote>
+<p>其他详细解析可参考:<a href="http://www.bijishequ.com/detail/418422?p=60-18" target="_blank" rel="external">http://www.bijishequ.com/detail/418422?p=60-18</a></p>
+<h1 id="android-job实现"><a href="#android-job实现" class="headerlink" title="android-job实现"></a>android-job实现</h1><p>Evernote 开源的一个库, 可以完美兼容几种 API, 这也是我最推荐的方式:</p>
+<p>不过官方的实例已经讲的很清楚了, 就不多说明了,后续遇到什么问题, 再进行更新.</p>
+<p>贴上 android-job 的 GitHub 页面: <a href="https://github.com/evernote/android-job" target="_blank" rel="external">https://github.com/evernote/android-job</a></p>
+<p>如果你不想读英文,这里有位博主已经翻译好了:</p>
+<p><a href="http://www.suqishuo.cn/Android-Job-from-evernote/" target="_blank" rel="external">http://www.suqishuo.cn/Android-Job-from-evernote/</a></p>
+<p>感谢您的阅读.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/JobSechedule/" rel="tag"># JobSechedule</a>
+          
+            <a href="/tags/定时任务/" rel="tag"># 定时任务</a>
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/20/hexo使用/" rel="next" title="hexo使用">
+                <i class="fa fa-chevron-left"></i> hexo使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://otbemm1i1.bkt.clouddn.com/17-8-12/6948694.jpg"
+               alt="张昊月" />
+          <p class="site-author-name" itemprop="name">张昊月</p>
+           
+              <p class="site-description motion-element" itemprop="description">泰山不让土壤，故能成其大；河海不择细流，故能就其深。</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#如何使用-JobSchedule"><span class="nav-number">1.</span> <span class="nav-text">如何使用 JobSchedule</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#三种库比较"><span class="nav-number">1.1.</span> <span class="nav-text">三种库比较</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#FirebaseJobSchedule"><span class="nav-number">1.2.</span> <span class="nav-text">FirebaseJobSchedule</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原生的-JobScheduler"><span class="nav-number">1.3.</span> <span class="nav-text">原生的 JobScheduler</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#android-job实现"><span class="nav-number">2.</span> <span class="nav-text">android-job实现</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">张昊月</span>
+
+  
+</div>
+
+
+  <div class="powered-by">
+    由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+  </div>
+
+  <span class="post-meta-divider">|</span>
+
+  <div class="theme-info">
+    主题 &mdash;
+    <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+      NexT.Pisces
+    </a>
+  </div>
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://HowieChang.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://howiechang.cn/2017/11/21/如何使用JobSchedule/';
+          this.page.identifier = '2017/11/21/如何使用JobSchedule/';
+          this.page.title = '如何使用JobSchedule';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://HowieChang.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("NN6F3mXtO1luipeaiK5CQuao-gzGzoHsz", "7MOTfuiMqaudxf5ym8LB0UjS");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
